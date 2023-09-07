@@ -16,7 +16,7 @@ const CustomButtom = ({
       className={`custom-btn ${containerStyles}`}
       onClick={() => {}}
     >
-      <span className={`flex-1`}>Explore Cars</span>
+      <span className={`flex-1`}>{title}</span>
     </button>
   );
 };
