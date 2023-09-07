@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import CustomButtom from "./CustomButtom";
 
 export const Hero = () => {
@@ -24,7 +26,15 @@ export const Hero = () => {
         />
       </div>
       <div className="hero__image-container">
-        <div className="hero__image">{/* <Image src=/> */}</div>
+        <div className="hero__image">
+          <Image
+            src="/hero.png"
+            alt="hero_image"
+            fill
+            className="object-contain"
+          />
+          <div className="hero__image-overlay" />
+        </div>
       </div>
     </div>
   );
