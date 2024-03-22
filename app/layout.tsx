@@ -3,14 +3,18 @@ import "./globals.css";
 import { Footer, NavBar } from "@components";
 
 export const metadata = {
-  title: "Car Hub",
-  description: "Discover world's best car showcase application",
+  title: "Folka Cars",
+  description: "Rent a car here!",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang='en'>
-      <body className='relative'>
+    <html lang="en">
+      <body className="relative">
         <NavBar />
         {children}
         <Footer />
