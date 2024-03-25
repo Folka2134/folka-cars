@@ -2,7 +2,11 @@ import { SignIn } from "@clerk/nextjs";
 import React from "react";
 
 const Page = () => {
-  return <SignIn />;
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <SignIn />;
+    </div>
+  );
 };
 
 export default Page;
