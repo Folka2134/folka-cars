@@ -15,12 +15,12 @@ const ShowMore = ({ pageNumber, isNext }: ShowMoreProps) => {
 
     // Update the "limit" search parameter in the URL with the new value
     const newPathname = updateSearchParams("limit", `${newLimit}`);
-    
-    router.push(newPathname);
+
+    router.push(newPathname, { scroll: false });
   };
 
   return (
-    <div className="w-full flex-center gap-5 mt-10">
+    <div className="flex-center mt-10 w-full gap-5">
       {!isNext && (
         <CustomButton
           btnType="button"
