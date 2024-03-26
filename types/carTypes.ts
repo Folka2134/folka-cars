@@ -1,4 +1,5 @@
 export interface CarProps {
+  id: string;
   city_mpg: number;
   class: string;
   combination_mpg: number;
