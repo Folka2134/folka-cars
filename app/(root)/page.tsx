@@ -25,12 +25,11 @@ export default async function Home({ searchParams }: HomeProps) {
       <div className="padding-x padding-y max-width mt-12" id="discover">
         <div className="home__text-container">
           <h1 className="text-4xl font-extrabold">Car Catalogue</h1>
-          <p>Explore out cars you might like</p>
+          <p>Browse our cars you might like</p>
         </div>
 
         <div className="home__filters">
           <SearchBar />
-
           <div className="home__filter-container">
             <CustomFilter title="fuel" options={fuels} />
             <CustomFilter title="year" options={yearsOfProduction} />
@@ -40,7 +39,7 @@ export default async function Home({ searchParams }: HomeProps) {
         {!isDataEmpty ? (
           <section>
             <div className="home__cars-wrapper">
-              {allCars?.map((car, index) => <CarCard key={index} car={car} />)}
+              {allCars?.map((car) => <CarCard key={car.id} car={car} />)}
             </div>
 
             <ShowMore

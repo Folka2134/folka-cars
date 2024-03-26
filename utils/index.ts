@@ -1,4 +1,7 @@
-import { CarProps, FilterProps } from "@types";
+import { v4 as uuid4 } from "uuid";
+
+import { FilterProps } from "@types";
+import { CarProps } from "@/types/carTypes";
 
 export const calculateCarRent = (city_mpg: number, year: number) => {
   const basePricePerDay = 50; // Base rental price per day in dollars
@@ -61,7 +64,12 @@ export async function fetchCars(filters: FilterProps) {
   // Parse the response as JSON
   const result = await response.json();
 
-  return result;
+  const carsWithIds = result.map((car: any) => ({
+    ...car,
+    id: uuid4(),
+  }))
+
+  return carsWithIds;
 }
 
 export const generateCarImageUrl = (car: CarProps, angle?: string) => {
