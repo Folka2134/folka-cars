@@ -1,6 +1,6 @@
 export type OrderParams = {
-  carId: string;
-  userId: string;
+  carId: string | undefined;
+  userId: string | undefined;
   status: string;
   startDate: string;
 }
