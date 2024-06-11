@@ -36,6 +36,7 @@ export const POST = async (req: Request, res: Response) => {
     const { id, metadata } = event.data.object
 
     const order = {
+      stripeId: id,
       carId: metadata?.carId.toString(),
       userId: metadata?.userId,
       status: 'completed',

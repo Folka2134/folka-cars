@@ -1,6 +1,7 @@
 import { Schema, model, models } from "mongoose";
 
 export const OrderSchema = new Schema({
+  stripeId: { type: String, required: true },
   carId: { type: String, required: true },
   userId: { type: String, required: true},
   status: { type: String},
