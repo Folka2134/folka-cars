@@ -1,4 +1,4 @@
-export type Order = {
+export type OrderParams = {
   carId: string;
   userId: string;
   status: string;
