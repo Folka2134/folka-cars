@@ -1,10 +1,7 @@
-import { WebhookEvent } from "@clerk/nextjs/dist/types/server"
 import { createOrder } from "@lib/actions/order.actions"
 import { handleError } from "@utils"
-import { headers } from "next/headers"
 import { NextResponse } from "next/server"
 import stripe from "stripe"
-import { Webhook } from "svix"
 
 export const POST = async (req: Request, res: Response) => {
   const endPointSecret = process.env.STRIPE_WEBHOOK_SECRET
