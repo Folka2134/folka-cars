@@ -6,6 +6,6 @@ export type OrderParams = {
 }
 
 export type CheckoutParams = {
-  carId: string;
+  carId: any;
   userId: string;
 }

@@ -15,13 +15,13 @@ export const checkoutOrder = async (order: CheckoutParams) => {
 
   try {
     const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          quantity: 1
-        },
-      ],
+      // line_items: [
+      //   {
+      //     quantity: 1
+      //   },
+      // ],
       metadata: {
-        carId: order.carId,
+        carId: order.carId.carId,
         userId: order.userId,
       },
       mode: 'payment',

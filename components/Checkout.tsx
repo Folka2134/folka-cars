@@ -20,6 +20,8 @@ const Checkout = ({ carId, userId }: CheckoutParams) => {
     }
   }, []);
 
+  console.log(userId);
+
   const onCheckout = async () => {
     const order = {
       carId,
