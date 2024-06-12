@@ -13,11 +13,11 @@ interface CarDetailsProps {
 }
 
 const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const handleClick = () => {
-    router.push(`/car/${car.id}`);
-  };
+  // const handleClick = () => {
+  //   router.push(`/car/${car.id}`);
+  // };
 
   return (
     <>
@@ -109,7 +109,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                         {car.make} {car.model}
                       </h2>
                       <button
-                        onClick={handleClick}
+                        // onClick={handleClick}
                         className="rounded-lg bg-[#2B59FF] px-3 py-2 font-semibold text-white hover:bg-opacity-90 focus:bg-opacity-90 active:bg-violet-700"
                       >
                         Rent now!
