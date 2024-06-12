@@ -39,8 +39,7 @@ export const POST = async (req: Request, res: Response) => {
       stripeId: id,
       carId: metadata?.carId.toString(),
       userId: metadata?.userId,
-      status: 'completed',
-      startDate: new Date().toISOString()
+      startDate: new Date()
     }
 
     const newOrder =  await createOrder(order)

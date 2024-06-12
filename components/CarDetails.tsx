@@ -5,6 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { generateCarImageUrl } from "@utils";
 import { CarProps } from "@/types/carTypes";
 import { useRouter } from "next/navigation";
+import CheckoutButton from "./CheckoutButton";
 
 interface CarDetailsProps {
   isOpen: boolean;
@@ -13,12 +14,6 @@ interface CarDetailsProps {
 }
 
 const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
-  // const router = useRouter();
-
-  // const handleClick = () => {
-  //   router.push(`/car/${car.id}`);
-  // };
-
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -108,12 +103,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                       <h2 className="text-xl font-semibold capitalize">
                         {car.make} {car.model}
                       </h2>
-                      <button
-                        // onClick={handleClick}
-                        className="rounded-lg bg-[#2B59FF] px-3 py-2 font-semibold text-white hover:bg-opacity-90 focus:bg-opacity-90 active:bg-violet-700"
-                      >
-                        Rent now!
-                      </button>
+                      <CheckoutButton carId={car.id} />
                     </div>
 
                     <div className="mt-3 flex flex-wrap gap-4">

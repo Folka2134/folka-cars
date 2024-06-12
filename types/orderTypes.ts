@@ -2,6 +2,10 @@ export type OrderParams = {
   stripeId: string;
   carId: string | undefined;
   userId: string | undefined;
-  status: string;
-  startDate: string;
+  startDate: Date;
+}
+
+export type CheckoutParams = {
+  carId: string;
+  userId: string;
 }
