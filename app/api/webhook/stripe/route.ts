@@ -8,8 +8,8 @@ import { createOrder } from "@lib/actions/order.actions"
 export const POST = async (req: Request) => {
   const body = await req.text();
   const sig = headers().get('stripe-signature') as string
-  const endPointSecret = process.env.STRIPE_WEBHOOK_SECRET
-  let event
+  const endPointSecret = process.env.STRIPE_WEBHOOK_SECRET!
+  let event: Stripe.Event
 
   if (!endPointSecret) {
     throw new Error('Please add STRIPE_WEBHOOK_SECRET from Stripe Dashboard to .env or .env.local')
@@ -22,7 +22,7 @@ export const POST = async (req: Request) => {
   }
   
   try {
-    event = Stripe.webhooks.constructEvent(body, sig, endPointSecret)
+    event = stripe.webhooks.constructEvent(body, sig, endPointSecret)
   } catch (error) {
     return NextResponse.json({ message: 'Webhook error', error: error })
   }
