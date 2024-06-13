@@ -10,8 +10,11 @@ import { handleError } from "@utils";
 
 
 export const checkoutOrder = async (order: CheckoutParams) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: "2024-04-10",
+    typescript: true
+  })
   try {
     const session = await stripe.checkout.sessions.create({
       line_items: [
