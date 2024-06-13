@@ -1,12 +1,13 @@
 "use server"
 
+import Stripe from "stripe";
+import { redirect } from "next/navigation";
+
 import { CheckoutParams, OrderParams } from "@/types/orderTypes";
-import { auth } from "@clerk/nextjs";
 import { connectToDatabase } from "@lib/database";
 import Order from "@lib/database/models/order.model";
 import { handleError } from "@utils";
-import { redirect } from "next/navigation";
-import Stripe from "stripe";
+
 
 export const checkoutOrder = async (order: CheckoutParams) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
