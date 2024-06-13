@@ -40,7 +40,7 @@ export const POST = async (req: Request) => {
     }
 
     const newOrder =  await createOrder(order)
-    // return NextResponse.json({ message: 'OK', order: newOrder })        
+    return NextResponse.json({ message: 'OK', order: newOrder })        
   }
 
   return new NextResponse('ok', { status: 200 })
