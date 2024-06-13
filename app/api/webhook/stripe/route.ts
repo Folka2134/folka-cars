@@ -24,12 +24,12 @@ export const POST = async (req: Request) => {
   try {
     event = stripe.webhooks.constructEvent(body, sig, endPointSecret)
   } catch (error) {
-    return NextResponse.json({ message: 'Webhook error', error: error })
+    return new NextResponse("invalid signature", { status: 400 })
   }
 
-  const eventType = event.type
+  const session = event.data.object as Stripe.Checkout.Session
 
-  if(eventType === 'checkout.session.completed') {
+  if(event.type === 'checkout.session.completed') {
     const { id, metadata } = event.data.object
 
     const order = {
@@ -40,8 +40,8 @@ export const POST = async (req: Request) => {
     }
 
     const newOrder =  await createOrder(order)
-    return NextResponse.json({ message: 'OK', order: newOrder })        
+    // return NextResponse.json({ message: 'OK', order: newOrder })        
   }
 
-  return new Response('', { status: 200 })
+  return new NextResponse('ok', { status: 200 })
 }

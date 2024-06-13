@@ -7,10 +7,11 @@ import { CheckoutParams, OrderParams } from "@/types/orderTypes";
 import { connectToDatabase } from "@lib/database";
 import Order from "@lib/database/models/order.model";
 import { handleError } from "@utils";
+import { stripe } from "@lib/stripe";
+import { NextResponse } from "next/server";
 
 
 export const checkoutOrder = async (order: CheckoutParams) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -34,11 +35,11 @@ export const checkoutOrder = async (order: CheckoutParams) => {
       success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/`,
       cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/`,
       })
-    redirect(session.url!)
+
+    return new NextResponse(JSON.stringify({ url: session.url}))
   } catch (error) {
-    throw error
+    console.log("Stripe error", error);
   }
-        
 }
 
 
