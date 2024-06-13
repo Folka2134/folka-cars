@@ -1,11 +1,12 @@
-import { createOrder } from "@lib/actions/order.actions"
-import { handleError } from "@utils"
-import { NextResponse } from "next/server"
 import stripe from "stripe"
+import { NextResponse } from "next/server"
 
-export const POST = async (req: Request, res: Response) => {
-  const endPointSecret = process.env.STRIPE_WEBHOOK_SECRET
+import { createOrder } from "@lib/actions/order.actions"
+
+export const POST = async (req: Request) => {
+  const body = await req.text()
   const sig = req.headers.get('stripe-signature')
+  const endPointSecret = process.env.STRIPE_WEBHOOK_SECRET
   let event
 
   if (!endPointSecret) {
@@ -17,19 +18,16 @@ export const POST = async (req: Request, res: Response) => {
       status: 400
     })
   }
-
-  // Get body
-  const payload = await req.json()
-  const body = JSON.stringify(payload)
   
   try {
     event = stripe.webhooks.constructEvent(body, sig, endPointSecret)
   } catch (error) {
-    handleError(error)
-    return
+    return NextResponse.json({ message: 'Webhook error', error: error })
   }
 
-  if(event!.type === 'checkout.session.completed') {
+  const eventType = event.type
+
+  if(eventType === 'checkout.session.completed') {
     const { id, metadata } = event.data.object
 
     const order = {
@@ -40,8 +38,8 @@ export const POST = async (req: Request, res: Response) => {
     }
 
     const newOrder =  await createOrder(order)
-    return NextResponse.json(newOrder)        
+    return NextResponse.json({ message: 'OK', order: newOrder })        
   }
 
-  return NextResponse.json("Webhook received", { status: 200})
+  return new Response('', { status: 200 })
 }
