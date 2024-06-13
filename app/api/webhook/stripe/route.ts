@@ -1,11 +1,13 @@
-import stripe from "stripe"
+import Stripe from "stripe"
+import { stripe } from "@lib/stripe"
+import { headers } from "next/headers"
 import { NextResponse } from "next/server"
 
 import { createOrder } from "@lib/actions/order.actions"
 
 export const POST = async (req: Request) => {
-  const body = await req.text()
-  const sig = req.headers.get('stripe-signature')
+  const body = await req.text();
+  const sig = headers().get('stripe-signature') as string
   const endPointSecret = process.env.STRIPE_WEBHOOK_SECRET
   let event
 
@@ -20,7 +22,7 @@ export const POST = async (req: Request) => {
   }
   
   try {
-    event = stripe.webhooks.constructEvent(body, sig, endPointSecret)
+    event = Stripe.webhooks.constructEvent(body, sig, endPointSecret)
   } catch (error) {
     return NextResponse.json({ message: 'Webhook error', error: error })
   }
