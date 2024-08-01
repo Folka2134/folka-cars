@@ -1,4 +1,4 @@
-import { checkoutOrder } from "@lib/actions/order.actions";
+import { checkoutOrder, createOrder } from "@lib/actions/order.actions";
 import { loadStripe } from "@stripe/stripe-js";
 import React, { useEffect } from "react";
 
@@ -22,13 +22,27 @@ const Checkout = ({ carId, userId }: CheckoutParams) => {
 
   console.log(userId);
 
+  // const onCheckout = async () => {
+  //   const order = {
+  //     carId,
+  //     userId,
+  //   };
+
+  //   await checkoutOrder(order);
+  // };
+
   const onCheckout = async () => {
+    const numberOfDays = 3;
+
     const order = {
       carId,
       userId,
+      startDate: new Date(),
+      numberOfDays: numberOfDays,
+      totalCost: numberOfDays * 100,
     };
 
-    await checkoutOrder(order);
+    await createOrder(order);
   };
 
   return (
