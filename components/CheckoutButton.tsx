@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Checkout from "./Checkout";
 
-const CheckoutButton = (carId: any) => {
+const CheckoutButton = ({ carId }: any) => {
   const { user } = useUser();
   const userId = user?.publicMetadata.userId as string;
 
