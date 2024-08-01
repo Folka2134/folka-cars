@@ -2,7 +2,7 @@ export type OrderParams = {
   carId: string | undefined;
   userId: string | undefined;
   startDate: Date;
-  numberOfDay: number;
+  numberOfDays: number;
   totalCost: number;
 };
 
