@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Checkout from "./Checkout";
 
-const CheckoutButton = ({ carId }: any) => {
+const CheckoutButton = ({ carId, carRent }: any) => {
   const { user } = useUser();
   const userId = user?.publicMetadata.userId as string;
 
@@ -15,7 +15,7 @@ const CheckoutButton = ({ carId }: any) => {
         </button>
       </SignedOut>
       <SignedIn>
-        <Checkout carId={carId} userId={userId} />
+        <Checkout carId={carId} carRent={carRent} userId={userId} />
       </SignedIn>
     </>
   );

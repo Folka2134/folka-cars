@@ -15,7 +15,7 @@ interface CarCardProps {
 const CarCard = ({ car }: CarCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const carRent = calculateCarRent(car.city_mpg, car.year);
+  const carRent = parseInt(calculateCarRent(car.city_mpg, car.year));
 
   return (
     <div className="car-card group">
@@ -83,6 +83,7 @@ const CarCard = ({ car }: CarCardProps) => {
         isOpen={isOpen}
         closeModal={() => setIsOpen(false)}
         car={car}
+        carRent={carRent}
       />
     </div>
   );

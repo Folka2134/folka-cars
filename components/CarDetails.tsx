@@ -11,9 +11,10 @@ interface CarDetailsProps {
   isOpen: boolean;
   closeModal: () => void;
   car: CarProps;
+  carRent: number;
 }
 
-const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
+const CarDetails = ({ isOpen, closeModal, car, carRent }: CarDetailsProps) => {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -103,7 +104,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                       <h2 className="text-xl font-semibold capitalize">
                         {car.make} {car.model}
                       </h2>
-                      <CheckoutButton carId={car.id} />
+                      <CheckoutButton carId={car.id} carRent={carRent} />
                     </div>
 
                     <div className="mt-3 flex flex-wrap gap-4">
