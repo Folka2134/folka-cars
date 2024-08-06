@@ -3,10 +3,14 @@
 import Stripe from "stripe";
 import { redirect } from "next/navigation";
 
-import { CheckoutParams, OrderParams } from "@/types/orderTypes";
+import {
+  CheckoutParams,
+  GetOrdersByUserParams,
+  OrderParams,
+} from "@/types/orderTypes";
 import { connectToDatabase } from "@lib/database";
 import Order from "@lib/database/models/order.model";
-import { handleError } from "@utils";
+import { getUserDetails, handleError } from "@utils";
 
 export const checkoutOrder = async (order: any) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -53,3 +57,31 @@ export async function createOrder(order: OrderParams, session: any) {
     handleError(error);
   }
 }
+
+export const getOrdersByUser = async ({
+  userId,
+  limit = 6,
+  page,
+}: GetOrdersByUserParams) => {
+  try {
+    await connectToDatabase();
+
+    const conditions = { userId: userId };
+    const skipAmount = (page - 1) * limit;
+
+    const ordersQuery = Order.find(conditions)
+      .sort({ createdAt: "desc" })
+      .skip(skipAmount)
+      .limit(limit);
+
+    const orders = await getUserDetails(ordersQuery);
+    const ordersCount = await Order.countDocuments(conditions);
+
+    return {
+      data: JSON.parse(JSON.stringify(orders)),
+      totalPages: Math.ceil(ordersCount / limit),
+    };
+  } catch (error) {
+    handleError(error);
+  }
+};
