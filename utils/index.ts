@@ -6,14 +6,6 @@ import User from "@lib/database/models/user.model";
 import { connect } from "tls";
 import { connectToDatabase } from "@lib/database";
 
-export const getUserDetails = async (query: any) => {
-  return query.populate({
-    path: "user",
-    model: User,
-    select: "firstName",
-  });
-};
-
 export const calculateCarRent = (city_mpg: number, year: number) => {
   const basePricePerDay = 50; // Base rental price per day in dollars
   const mileageFactor = 0.1; // Additional rate per mile driven
