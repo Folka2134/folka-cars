@@ -10,7 +10,21 @@ import {
 } from "@/types/orderTypes";
 import { connectToDatabase } from "@lib/database";
 import Order from "@lib/database/models/order.model";
-import { getUserDetails, handleError } from "@utils";
+import { handleError } from "@utils";
+import User from "@lib/database/models/user.model";
+
+const getUserDetails = async (query: any) => {
+  try {
+    const populatedQuery = await query.populate({
+      path: "user",
+      model: User,
+      select: "firstName lastName",
+    });
+    return populatedQuery;
+  } catch (error) {
+    throw error; // Rethrow the error to handle it further up the call stack
+  }
+};
 
 export const checkoutOrder = async (order: any) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -39,19 +53,25 @@ export const checkoutOrder = async (order: any) => {
       success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/`,
       cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/`,
     });
-    await createOrder(order, session);
+    await createOrder(order);
     redirect(session.url!);
   } catch (error) {
     throw error;
   }
 };
 
-export async function createOrder(order: OrderParams, session: any) {
+export async function createOrder(order: OrderParams) {
   try {
     await connectToDatabase();
 
+    const user = await User.findById(order.userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
     // Create new order
-    const newOrder = await Order.create(order);
+    const newOrder = await Order.create({ ...order, user: order.userId });
     return JSON.parse(JSON.stringify(newOrder));
   } catch (error) {
     handleError(error);
