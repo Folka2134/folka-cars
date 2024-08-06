@@ -2,6 +2,17 @@ import { v4 as uuid4 } from "uuid";
 
 import { FilterProps } from "@types";
 import { CarProps } from "@/types/carTypes";
+import User from "@lib/database/models/user.model";
+import { connect } from "tls";
+import { connectToDatabase } from "@lib/database";
+
+export const getUserDetails = async (query: any) => {
+  return query.populate({
+    path: "user",
+    model: User,
+    select: "firstName",
+  });
+};
 
 export const calculateCarRent = (city_mpg: number, year: number) => {
   const basePricePerDay = 50; // Base rental price per day in dollars
@@ -58,7 +69,7 @@ export async function fetchCars(filters: FilterProps) {
     `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&limit=${limit}&fuel_type=${fuel}`,
     {
       headers: headers,
-    }
+    },
   );
 
   // Parse the response as JSON
@@ -67,7 +78,7 @@ export async function fetchCars(filters: FilterProps) {
   const carsWithIds = result.map((car: any) => ({
     ...car,
     id: uuid4(),
-  }))
+  }));
 
   return carsWithIds;
 }
@@ -76,18 +87,21 @@ export const generateCarImageUrl = (car: CarProps, angle?: string) => {
   const url = new URL("https://cdn.imagin.studio/getimage");
   const { make, model, year } = car;
 
-  url.searchParams.append('customer', process.env.NEXT_PUBLIC_IMAGIN_API_KEY || '');
-  url.searchParams.append('make', make);
-  url.searchParams.append('modelFamily', model.split(" ")[0]);
-  url.searchParams.append('zoomType', 'fullscreen');
-  url.searchParams.append('modelYear', `${year}`);
+  url.searchParams.append(
+    "customer",
+    process.env.NEXT_PUBLIC_IMAGIN_API_KEY || "",
+  );
+  url.searchParams.append("make", make);
+  url.searchParams.append("modelFamily", model.split(" ")[0]);
+  url.searchParams.append("zoomType", "fullscreen");
+  url.searchParams.append("modelYear", `${year}`);
   // url.searchParams.append('zoomLevel', zoomLevel);
-  url.searchParams.append('angle', `${angle}`);
+  url.searchParams.append("angle", `${angle}`);
 
   return `${url}`;
-} 
+};
 
 export const handleError = (error: unknown) => {
-  console.error(error)
-  throw new Error(typeof error === 'string' ? error : JSON.stringify(error))
-}
+  console.error(error);
+  throw new Error(typeof error === "string" ? error : JSON.stringify(error));
+};
