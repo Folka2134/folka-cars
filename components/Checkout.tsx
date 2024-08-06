@@ -7,11 +7,19 @@ loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!}`);
 
 type CheckoutParams = {
   carId: string;
-  userId: string;
+  carMake: string;
+  carModel: string;
   carRent: number;
+  userId: string;
 };
 
-const Checkout = ({ carId, userId, carRent }: CheckoutParams) => {
+const Checkout = ({
+  carId,
+  carMake,
+  carModel,
+  carRent,
+  userId,
+}: CheckoutParams) => {
   const [numberOfDays, setNumberOfDays] = useState<number>(1);
 
   useEffect(() => {
@@ -37,6 +45,9 @@ const Checkout = ({ carId, userId, carRent }: CheckoutParams) => {
     try {
       const order = {
         carId,
+        carMake,
+        carModel,
+        carRent,
         userId,
         startDate: new Date(),
         numberOfDays: numberOfDays,

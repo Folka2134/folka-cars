@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Checkout from "./Checkout";
 
-const CheckoutButton = ({ carId, carRent }: any) => {
+const CheckoutButton = ({ carId, carMake, carModel, carRent }: any) => {
   const { user } = useUser();
   const userId = user?.publicMetadata.userId as string;
 
@@ -15,7 +15,13 @@ const CheckoutButton = ({ carId, carRent }: any) => {
         </button>
       </SignedOut>
       <SignedIn>
-        <Checkout carId={carId} carRent={carRent} userId={userId} />
+        <Checkout
+          carId={carId}
+          carMake={carMake}
+          carModel={carModel}
+          carRent={carRent}
+          userId={userId}
+        />
       </SignedIn>
     </>
   );

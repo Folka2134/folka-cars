@@ -1,3 +1,4 @@
+import CarCard from "@components/CarCard";
 import { Schema, model, models } from "mongoose";
 
 export interface IOrder extends Document {
@@ -12,6 +13,9 @@ export interface IOrder extends Document {
 
 export const OrderSchema = new Schema({
   carId: { type: String, required: true },
+  carMake: { type: String, required: true },
+  carModel: { type: String, required: true },
+  carRent: { type: Number, required: true },
   userId: { type: String, required: true },
   startDate: { type: Date, default: Date.now },
   numberOfDays: { type: Number, required: true },

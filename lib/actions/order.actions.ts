@@ -13,6 +13,17 @@ import Order from "@lib/database/models/order.model";
 import { handleError } from "@utils";
 import User from "@lib/database/models/user.model";
 
+type checkoutOrderParams = {
+  carId: string;
+  carMake: string;
+  carModel: string;
+  carRent: number;
+  userId: string;
+  startDate: Date;
+  numberOfDays: number;
+  totalCost: number;
+};
+
 const getUserDetails = async (query: any) => {
   try {
     const populatedQuery = await query.populate({
@@ -26,7 +37,7 @@ const getUserDetails = async (query: any) => {
   }
 };
 
-export const checkoutOrder = async (order: any) => {
+export const checkoutOrder = async (order: checkoutOrderParams) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
     apiVersion: "2024-04-10",
     typescript: true,
@@ -39,7 +50,7 @@ export const checkoutOrder = async (order: any) => {
             currency: "usd",
             unit_amount: (order.totalCost / order.numberOfDays) * 100,
             product_data: {
-              name: order.carId,
+              name: order.carMake + " " + order.carModel,
             },
           },
           quantity: order.numberOfDays,

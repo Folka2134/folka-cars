@@ -104,7 +104,12 @@ const CarDetails = ({ isOpen, closeModal, car, carRent }: CarDetailsProps) => {
                       <h2 className="text-xl font-semibold capitalize">
                         {car.make} {car.model}
                       </h2>
-                      <CheckoutButton carId={car.id} carRent={carRent} />
+                      <CheckoutButton
+                        carId={car.id}
+                        carMake={car.make}
+                        carModel={car.model}
+                        carRent={carRent}
+                      />
                     </div>
 
                     <div className="mt-3 flex flex-wrap gap-4">

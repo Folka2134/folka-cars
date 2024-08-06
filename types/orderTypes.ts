@@ -1,5 +1,8 @@
 export type OrderParams = {
-  carId: string | undefined;
+  carId: string;
+  carMake: string;
+  carModel: string;
+  carRent: number;
   userId: string | undefined;
   startDate: Date;
   numberOfDays: number;
