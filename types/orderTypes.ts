@@ -10,3 +10,9 @@ export type CheckoutParams = {
   carId: any;
   userId: string;
 };
+
+export type GetOrdersByUserParams = {
+  userId: string;
+  limit?: number;
+  page: number;
+};
