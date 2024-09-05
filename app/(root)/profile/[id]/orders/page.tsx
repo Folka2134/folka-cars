@@ -13,9 +13,9 @@ const OrdersPage = async ({ params: { id } }: any) => {
   }
 
   return (
-    <div className="flex flex-col items-center gap-5">
+    <div className="mb-20 flex flex-col items-center gap-5">
       <h1 className="text-xl font-semibold">Your Orders</h1>
-      <div className="flex flex-col gap-5">
+      <div className="my-12 flex flex-col gap-5 md:grid md:grid-cols-3 xl:grid-cols-4">
         {userOrders?.data.length === 0 ? (
           <p>No orders found</p>
         ) : (
