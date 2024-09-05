@@ -21,10 +21,10 @@ const NavBar = () => {
             className="rounded-full bg-[#2B59FF] bg-opacity-80 object-contain"
           />
         </Link>
-        <div className="flex w-32 items-center justify-end gap-3">
+        <div className="flex w-32 items-center justify-end gap-10">
           <SignedIn>
             <Link href={`/profile/${userId}/orders`}>
-              <span>Orders</span>
+              <span className="text-lg">Orders</span>
             </Link>
             <UserButton afterSignOutUrl="/" />
             {/* <MobileNav /> */}
