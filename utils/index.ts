@@ -48,7 +48,7 @@ export const deleteSearchParams = (type: string) => {
 };
 
 export async function fetchCars(filters: FilterProps) {
-  const { manufacturer, year, model, limit, fuel } = filters;
+  const { manufacturer, year, model, fuel } = filters;
 
   // Set the required headers for the API request
   const headers: HeadersInit = {
@@ -59,7 +59,7 @@ export async function fetchCars(filters: FilterProps) {
   try {
     // Set the required headers for the API request
     const response = await fetch(
-      `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&limit=${limit}&fuel_type=${fuel}`,
+      `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&fuel_type=${fuel}`,
       {
         headers: headers,
       },
@@ -68,6 +68,7 @@ export async function fetchCars(filters: FilterProps) {
     // Parse the response as JSON
     const result = await response.json();
 
+    console.log(result)
     const carsWithIds = result.map((car: any) => ({
       ...car,
       id: uuid4(),
